@@ -6,51 +6,62 @@
 #    By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 10:23:35 by jocorrea          #+#    #+#              #
-#    Updated: 2023/05/11 11:41:16 by jocorrea         ###   ########.fr        #
+#    Updated: 2023/05/13 14:02:23 by jocorrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	push_swap.a
+SRCS =	stack.c swap.c utils.c inputcheck.c simple.c
 
-SRC			=	stack.c swap.c inputcheck.c utils.c simple.c
+OBJS = $(SRCS:.c=.o)
 
-SRC_BONUS	=	
+BONUS =	ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c \
+		ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c \
+		ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c
 
-PUSH_SWAP	=	-I push_swap.h ./libft/libft.a
-
-OBJ			=	$(SRC:.c=.o)
-
-OBJ_BONUS	=	$(SRC_BONUS:.c=.o)
+BONUS_OBJS = $(BONUS:.c=.o)
 
 AR = ar rcs
 
-CC			=	gcc
+CC = cc
 
-RM			=	rm -f
+RM = rm -f
 
-CFLAGS		=	-Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD
+
+INCLUDE = -I ./libft/libft.a push_swap.h
+
+NAME = push_swap.a
 
 DEPS= $(OBJS:.o=.d)
 
-%.o: %.c $(PUSH_SWAP)
-	@$(CC) $(CFLAGS) $(PUSH_SWAP) -c $< -o $@
+DEPS_BONUS= $(BONUS_OBJS:.o=.d)
+
+%.o: %.c $(INCLUDE)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 all: $(NAME)
 
-$(NAME):	$(OBJ)
-			@make bonus -C ./libft
-			@make clean -C ./libft
-			@$(AR) $(NAME) $(OBJ)
+$(NAME): $(OBJS)
+	@make fclean -C ./libft
+	@make bonus -C ./libft
+	@make clean -C ./libft
+	@$(AR) $(NAME) $(OBJS)
 -include $(DEPS)
 
 clean:
-			@make clean -C ./libft
-			@$(RM) $(OBJ) $(DEPS)
-			
-fclean: 	clean
-			@make fclean -C ./libft
-			@$(RM) $(NAME) $(OBJ) $(DEPS)
+	@make clean -C ./libft
+	@$(RM) $(OBJS) $(BONUS_OBJS) $(DEPS) $(DEPS_BONUS)
+	
 
-re:			@fclean $(NAME)
+fclean: clean
+	@make fclean -C ./libft
+	@$(RM) $(NAME)
+	
 
-.PHONY:		all clean fclean re
+re: fclean $(NAME)
+
+bonus: $(OBJS) $(BONUS_OBJS)
+	@$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
+-include $(DEPS_BONUS)
+
+.PHONY: all clean fclean re bonus

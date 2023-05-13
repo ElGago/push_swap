@@ -6,7 +6,7 @@
 #    By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/14 13:24:20 by jocorrea          #+#    #+#              #
-#    Updated: 2023/01/28 13:15:02 by jocorrea         ###   ########.fr        #
+#    Updated: 2023/05/13 14:00:03 by jocorrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ clean:
 	
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(OBJS) $(BONUS_OBJS) $(DEPS) $(DEPS_BONUS)
 	
 
 re: fclean $(NAME)
