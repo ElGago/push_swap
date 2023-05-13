@@ -1,7 +1,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "libft/libft.h"
+# include "./libft/libft.h"
 # include <stdio.h>
 
 // Stack
@@ -16,7 +16,6 @@ typedef struct s_stack
 void	ft_putstr_fd(char *s, int fd);
 t_stack	*ft_stacknew(int value);
 t_stack	*ft_stacklast(t_stack *head);
-void	ft_stackadd_front(t_stack **stack, t_stack *new);
 void	ft_stackadd_back(t_stack **stack, t_stack *new);
 void	ft_removeLast(t_stack **stack);
 void	printStack(t_stack *head);
@@ -49,7 +48,10 @@ void		ft_putstr_fd(char *s, int fd);
 int			ft_str_cmp(char *s1, char *s2);
 int 		is_num(char *str);
 int  		duplicate(char **str);
+int			ft_is_order(t_stack *a);
 //check input
 int			inputcheck(char **arg);
 t_stack		*generate_a(char **arg);
+//sort
+t_stack *simple_sort(char **argv);
 #endif

@@ -21,6 +21,16 @@ int main(int args, char **argv)
 
     top = generate_a(argv);
     printStack(top);
+    if (ft_is_order(top))
+        printf("Esta ordenada la pila\n");
+    else
+    {
+         printf("no esta ordenada la pila\n");
+         top = simple_sort(argv);
+         printStack(top);
+    }
+       
+
     /*
     push(&top, 1);
     push(&top, 2);

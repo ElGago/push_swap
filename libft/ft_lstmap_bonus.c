@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:43:52 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/01/28 13:37:06 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:32:30 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_list	*new_tlist(t_list **new_list, t_list **tmp, void **content)
 		*tmp = ft_lstnew(*content);
 		if (!*tmp)
 			return (NULL);
-			*new_list = *tmp;
+		*new_list = *tmp;
 	}
 	return (*tmp);
 }

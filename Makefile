@@ -6,13 +6,13 @@
 #    By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 10:23:35 by jocorrea          #+#    #+#              #
-#    Updated: 2023/05/06 15:50:44 by jocorrea         ###   ########.fr        #
+#    Updated: 2023/05/11 11:41:16 by jocorrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	push_swap.a
 
-SRC			=	stack.c swap.c 
+SRC			=	stack.c swap.c inputcheck.c utils.c simple.c
 
 SRC_BONUS	=	
 
@@ -38,20 +38,19 @@ DEPS= $(OBJS:.o=.d)
 all: $(NAME)
 
 $(NAME):	$(OBJ)
-			make fclean -C ./libft
-			make bonus -C ./libft
-			make clean -C ./libft
+			@make bonus -C ./libft
+			@make clean -C ./libft
 			@$(AR) $(NAME) $(OBJ)
 -include $(DEPS)
 
 clean:
-			${RM} $(OBJ) 
-			make clean -C ./libft
+			@make clean -C ./libft
+			@$(RM) $(OBJ) $(DEPS)
 			
 fclean: 	clean
-			make fclean -C ./libft
-			${RM} $(NAME) ${OBJ} 
-	
-re:			fclean $(NAME)
+			@make fclean -C ./libft
+			@$(RM) $(NAME) $(OBJ) $(DEPS)
+
+re:			@fclean $(NAME)
 
 .PHONY:		all clean fclean re

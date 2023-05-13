@@ -6,32 +6,11 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 12:22:22 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/06 19:09:02 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/05/11 10:59:28 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "push_swap.h"
-
-int	ft_str_cmp(char *s1, char *s2)
-{
-	int i;
-
-    i = 0;
-    while(s1[i] && s2[i] && s1[i] == s2[i])i++;
-	return (s1[i] - s2[i]);
-}
-
-int is_num(char *str)
-{
-    int i;
-
-    i = 0;
-    while(str[i] && ft_isdigit(str[i]))
-    i++;
-    if(str[i] != '\0')
-        return (0);
-    return (1);
-}
 
 int  duplicate(char **str)
 {
@@ -80,5 +59,7 @@ t_stack *generate_a(char **arg)
     if (inputcheck(arg))
         while (size-- > 1)
             push(&a,ft_atoi(arg[size]));
+    else
+        printf("argumentos invalidos\n");
     return (a);
 }

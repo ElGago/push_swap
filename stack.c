@@ -74,12 +74,6 @@ void	ft_removeLast(t_stack **stack)
 	}
 }
 
-void	ft_stackadd_front(t_stack **stack, t_stack *new)
-{
-	new->next = *stack;
-	*stack = new;
-}
-
 int	ft_stacksize(t_stack *stack)
 {
 	int	i;
