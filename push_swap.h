@@ -8,28 +8,27 @@
 typedef struct s_stack
 {
 	int				value;
-	int				index;
 	struct s_stack	*next;
 }				t_stack;
 
 // Util functions
-void	ft_putstr_fd(char *s, int fd);
-t_stack	*ft_stacknew(int value);
-t_stack	*ft_stacklast(t_stack *head);
-void	ft_stackadd_back(t_stack **stack, t_stack *new);
-void	ft_removeLast(t_stack **stack);
-void	printStack(t_stack *head);
-int		ft_stacksize(t_stack *head);
-void 	push(t_stack **top, int x);
-int		isEmpty(t_stack *top);
-int		peek(t_stack *top);
-int		pop(t_stack **top);
-
+void		ft_putstr_fd(char *s, int fd);
+t_stack		*ft_stacknew(int value);
+t_stack		*ft_stacklast(t_stack **head);
+void		ft_stackadd_back(t_stack **stack, t_stack *new);
+void		ft_removeLast(t_stack **stack);
+void		printStack(t_stack *head);
+int			ft_stacksize(t_stack *head);
+void 		push(t_stack **top, int x);
+int			isEmpty(t_stack *top);
+int			peek(t_stack *top);
+int			pop(t_stack **top);
+void 		freeStack(t_stack** top);
 // Instruction functions
-t_stack	*swap(t_stack **a);
+void		swap(t_stack **a);
 void		push_stack(t_stack **stack_to, t_stack **stack_from);
 void		rotate(t_stack **stack);
-void			reverseRotate(t_stack **stack);
+void		reverseRotate(t_stack **stack);
 
 void		sa(t_stack **stack_a);
 void		sb(t_stack **stack_b);
@@ -54,4 +53,6 @@ int			inputcheck(char **arg);
 t_stack		*generate_a(char **arg);
 //sort
 t_stack *simple_sort(char **argv);
+int ft_Stack_sort(t_stack **a, t_stack **b);
+int    newsort(t_stack **a, t_stack **b);
 #endif

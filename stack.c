@@ -14,43 +14,30 @@
 
 t_stack	*ft_stacknew(int value)
 {
-    t_stack	*linkedstack;
+    t_stack	*stack;
 
-	linkedstack = (t_stack *)malloc(sizeof(t_stack));
-	if (!linkedstack)
-		return (NULL);
-	linkedstack->value = value;
-    linkedstack->index = -1;
-	linkedstack->next = NULL;
-	return (linkedstack);
-}
-
-t_stack	*ft_stacklast(t_stack *stack)
-{
+	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
 		return (NULL);
-	if (!stack->next)
-		return (stack);
-	while (stack)
-	{
-		if (!stack->next)
-			return (stack);
-		stack = stack->next;
-	}
+	stack->value = value;
+	stack->next = NULL;
 	return (stack);
+}
+
+t_stack	*ft_stacklast(t_stack **stack)
+{
+	while (*stack && (*stack)->next)
+		*stack = (*stack)->next;
+	return (*stack);
 }
 
 void	ft_stackadd_back(t_stack **stack, t_stack *new)
 {
 	t_stack	*tmp;
 
-	tmp = (*stack);
-	if ((*stack))
-	{
-		while (tmp->next != NULL)
-			tmp = tmp->next;
+	tmp = ft_stacklast(stack);
+	if ((tmp))
 		tmp->next = new;
-	}
 	if (!(*stack))
 		((*stack) = new);
 }
@@ -95,67 +82,62 @@ void	printStack(t_stack *head)
 	while (tmp != NULL)
 	{
 		ft_putnbr_fd(tmp->value,1);
-		ft_putendl_fd("",1);
+		ft_putstr_fd(", ",1);
 		tmp = tmp->next;
+	}
+	ft_putendl_fd("",1);
+}
+
+void push(t_stack **top, int x)
+{
+    t_stack *node;
+
+    node = ft_stacknew(x);
+    if (node)
+	{
+    	node->next = *top;
+    	*top = node;
 	}
 }
 
-void push(t_stack **top, int x)        // insertar al principio
+int isEmpty(t_stack *top) 
 {
-    // asignar un nuevo nodo en un heap
-    t_stack *node = NULL;
-
-    node = (t_stack *)malloc(sizeof(t_stack));
-    // comtrie si la stack (heap) está llena. Entonces insertar un elemento sería
-    // conduce al desbordamiento de la stack
-    if (!node)
-    {
-        ft_putstr_fd("Heap Overflow\n",2);
-        exit(-1);
-    }
-    // establecer datos en el nodo asignado
-    node->value = x;
-    // establece el puntero .next del nuevo nodo para que apunte al actual
-    // nodo superior de la lista
-    node->next = *top;
-    // actualiza el puntero superior
-    *top = node;
-}
-
-int isEmpty(t_stack *top) {
     return (top == NULL);
 }
 
-// Función de utilidad para devolver el elemento superior de la stack
 int peek(t_stack *top)
 {
-    // comprobar si hay una stack vacía
-    if (!isEmpty(top)) {
-        return top->value;
-    }
-    else {
-        ft_putstr_fd("The stack is empty\n",2);
-        exit(1);
-    }
+    if (!isEmpty(top)) 
+        return (top->value);
+    else
+		return (-1);
 }
 
-// Función de utilidad para sacar un elemento superior de la stack
-int pop(t_stack **top)        // eliminar al principio
+int pop(t_stack **top)
 {
     t_stack *node;
 	int x;
-    // comprobar si hay subdesbordamiento de stack
-    if (*top == NULL)
+   
+    if (*top)
     {
-        ft_putstr_fd("Stack Underflow\n", 1);
-        exit(1);
+ 		x = peek(*top);
+    	node = *top;
+   		*top = (*top)->next;
+    	free(node);
+    	return (x);
+	}
+	else
+		return (-1);
+}
+
+void freeStack(t_stack** top) 
+{
+	t_stack *temp;
+
+    while (*top != NULL)
+	{
+        temp = *top;
+        *top = (*top)->next;
+        free(temp);
     }
-    // tomar nota de los datos del nodo superior
- 	x = peek(*top);
-    node = *top;
-    // actualiza el puntero superior para que apunte al siguiente nodo
-    *top = (*top)->next;
-    // memoria asignada libre
-    free(node);
-    return x;
 }
