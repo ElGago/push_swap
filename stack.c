@@ -14,7 +14,7 @@
 
 t_stack	*ft_stacknew(int value)
 {
-    t_stack	*stack;
+	t_stack	*stack;
 
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
@@ -24,18 +24,22 @@ t_stack	*ft_stacknew(int value)
 	return (stack);
 }
 
-t_stack	*ft_stacklast(t_stack **stack)
+t_stack	*ft_stacklast(t_stack *stack)
 {
-	while (*stack && (*stack)->next)
-		*stack = (*stack)->next;
-	return (*stack);
+	if (!stack)
+		return (NULL);
+	if (!(stack)->next)
+		return (stack);
+	while (stack && (stack)->next)
+		stack = (stack)->next;
+	return (stack);
 }
 
 void	ft_stackadd_back(t_stack **stack, t_stack *new)
 {
 	t_stack	*tmp;
 
-	tmp = ft_stacklast(stack);
+	tmp = ft_stacklast(*stack);
 	if ((tmp))
 		tmp->next = new;
 	if (!(*stack))

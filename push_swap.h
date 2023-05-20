@@ -14,7 +14,7 @@ typedef struct s_stack
 // Util functions
 void		ft_putstr_fd(char *s, int fd);
 t_stack		*ft_stacknew(int value);
-t_stack		*ft_stacklast(t_stack **head);
+t_stack		*ft_stacklast(t_stack *stack);
 void		ft_stackadd_back(t_stack **stack, t_stack *new);
 void		ft_removeLast(t_stack **stack);
 void		printStack(t_stack *head);
@@ -48,11 +48,12 @@ int			ft_str_cmp(char *s1, char *s2);
 int 		is_num(char *str);
 int  		duplicate(char **str);
 int			ft_is_order(t_stack *a);
+int stackMin(t_stack *stack);
 //check input
 int			inputcheck(char **arg);
 t_stack		*generate_a(char **arg);
 //sort
-t_stack *simple_sort(char **argv);
-int ft_Stack_sort(t_stack **a, t_stack **b);
-int    newsort(t_stack **a, t_stack **b);
+t_stack		*simple_sort(t_stack **a);
+int 		ft_Stack_sort(t_stack **a, t_stack **b);
+int    		newsort(t_stack **a, t_stack **b);
 #endif

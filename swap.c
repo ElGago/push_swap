@@ -40,7 +40,7 @@ void		rotate(t_stack **stack)
     top = pop(stack);
     if (top != -1)
     {
-        last = ft_stacklast(stack);
+        last = ft_stacklast(*stack);
         last->next = ft_stacknew(top);
     }
 }
@@ -49,7 +49,7 @@ void		reverseRotate(t_stack **stack)
 {
     t_stack *last;
 
-    last = ft_stacklast(stack);
+    last = ft_stacklast(*stack);
     if (last != NULL)
         push(stack, last->value);
     ft_removeLast(stack);

@@ -1,179 +1,60 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
-
-typedef struct {
-    Node* top;
-} Stack;
-
-void initializeStack(Stack* s) {
-    s->top = NULL;
+// Función para intercambiar dos elementos en un arreglo
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void destroyStack(Stack* s) {
-    Node* temp;
-    while (s->top != NULL) {
-        temp = s->top;
-        s->top = s->top->next;
-        free(temp);
-    }
-}
+// Función para particionar el arreglo utilizando el último elemento como pivote
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];  // Tomamos el último elemento como pivote
+    int i = (low - 1);  // Índice del menor elemento
 
-int isStackEmpty(Stack* s) {
-    return s->top == NULL;
-}
-
-void push(Stack* s, int element) {
-    Node* newNode = (Node*) malloc(sizeof(Node));
-    newNode->data = element;
-    newNode->next = s->top;
-    s->top = newNode;
-}
-
-int pop(Stack* s) {
-    Node* temp;
-    int data = s->top->data;
-    temp = s->top;
-    s->top = s->top->next;
-    free(temp);
-    return data;
-}
-
-void swap(Stack* s) {
-    int temp;
-    if (s->top != NULL && s->top->next != NULL) {
-        temp = s->top->data;
-        s->top->data = s->top->next->data;
-        s->top->next->data = temp;
-    }
-}
-
-void rotate(Stack* s) {
-    if (s->top != NULL && s->top->next != NULL) {
-        Node* temp = s->top;
-        while (temp->next != NULL) {
-            temp = temp->next;
+    for (int j = low; j <= high - 1; j++) {
+        // Si el elemento actual es más pequeño o igual que el pivote
+        if (arr[j] <= pivot) {
+            i++;  // Incrementamos el índice del menor elemento
+            swap(&arr[i], &arr[j]);
         }
-        temp->next = s->top;
-        s->top = s->top->next;
-        temp->next->next = NULL;
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+// Función de Quicksort recursivo
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        // Obtenemos el índice de partición
+        int p = partition(arr, low, high);
+
+        // Ordenamos los elementos antes y después de la partición
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
     }
 }
 
-void reverseRotate(Stack* s) {
-    if (s->top != NULL && s->top->next != NULL) {
-        Node* temp = s->top;
-        while (temp->next->next != NULL) {
-            temp = temp->next;
-        }
-        temp->next->next = s->top;
-        s->top = temp->next;
-        temp->next = NULL;
+// Función para imprimir el arreglo
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
     }
+    printf("\n");
 }
 
-void pushToStackB(Stack* a, Stack* b, int count) {
-    for (int i = 0; i < count; i++) {
-        push(b, pop(a));
-        printf("pb\n");
-    }
-}
+// Ejemplo de uso
+int main() {
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
-void pushToStackA(Stack* a, Stack* b, int count) {
-    for (int i = 0; i < count; i++) {
-        push(a, pop(b));
-        printf("pa\n");
-    }
-}
+    printf("Arreglo original:\n");
+    printArray(arr, n);
 
-void sort(Stack* a, Stack* b, int size) {
-    if (size == 2) {
-        if (a->top->data > a->top->next->data) {
-            swap(a);
-            printf("sa\n");
-        }
-    } else if (size == 3) {
-        int first = a->top->data;
-        int second = a->top->next->data;
-        int third = a->top->next->next->data;
+    quickSort(arr, 0, n - 1);
 
-        if (first > second && first > third && second < third) {
-            swap(a);
-            printf("sa\n");
-        } else if (first < second && first > third && second > third) {
-            reverseRotate(a);
-            printf("rra\n");
-        } else if (first > second && first < third && second > third) {
-            rotate(a);
-            printf("ra\n");
-        } else if (first > second && first > third && second > third) {
-            swap(a);
-            printf("sa\n");
-            reverseRotate(a);
-            printf("rra\n");
-        } else if (first < second && first < third && second > third) {
-            rotate(a);
-            printf("ra\n");
-        }
-        if (b->top->data > b->top->next->data) {
-            swap(b);
-            printf("sb\n");
-        }
-        pushToStackA(a, b, 2);
-        if (a->top->data > a->top->next->data) {
-            swap(a);
-            printf("sa\n");
-        }
-    } else {
-        int count = 0;
-        int pivot = a->top->data;
-
-        for (Node* current = a->top; current != NULL; current = current->next) {
-            if (current->data < pivot) {
-                count++;
-            }
-        }
-
-        pushToStackB(a, b, count);
-
-        sort(a, b, count);
-
-        pushToStackA(a, b, count);
-
-        while (a->top->data != pivot) {
-            rotate(a);
-            printf("ra\n");
-        }
-
-        sort(a, b, size - count);
-
-        while (!isStackEmpty(b)) {
-            push(a, pop(b));
-            printf("pa\n");
-    }
-    }
-}
-
-
-int main(int argc, char* argv[]) {
-    Stack a, b;
-    initializeStack(&a);
-    initializeStack(&b);
-
-    for (int i = 1; i < argc; i++) {
-        push(&a, atoi(argv[i]));
-    }
-
-    sort(&a, &b, argc - 1);
-    while (!isStackEmpty(&a))
-        printf("%d, ", pop(&a));
-        printf("\n");
-    destroyStack(&a);
-    destroyStack(&b);
+    printf("Arreglo ordenado:\n");
+    printArray(arr, n);
 
     return 0;
 }

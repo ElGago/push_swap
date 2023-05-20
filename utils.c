@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:57:49 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/11 11:00:05 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:04:00 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,33 @@ int is_num(char *str)
     if(str[i] != '\0')
         return (0);
     return (1);
+}
+
+int stackMax(t_stack *stack)
+{
+    int max;
+
+    max = (stack)->value; 
+    while (stack)
+    {
+        if (max < peek(stack))
+            max = peek(stack);
+        stack = stack->next;
+    }
+    return (max);
+}
+
+int stackMin(t_stack *stack)
+{
+    int min;
+
+    min = stack->value; 
+    while (stack)
+    {
+        if (min < peek(stack))
+            min = peek(stack);
+        stack = stack->next;
+    }
+    return (min);
 }
 
