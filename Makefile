@@ -6,11 +6,11 @@
 #    By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 10:23:35 by jocorrea          #+#    #+#              #
-#    Updated: 2023/05/13 14:02:23 by jocorrea         ###   ########.fr        #
+#    Updated: 2023/05/25 11:54:30 by jocorrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	stack.c swap.c utils.c inputcheck.c simple.c
+SRCS =	stack.c swap.c utils.c inputcheck.c simple.c chunk_insertion_sort.c
 
 OBJS = $(SRCS:.c=.o)
 

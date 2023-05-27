@@ -8,6 +8,8 @@
 typedef struct s_stack
 {
 	int				value;
+	int				index;
+	int				pos;
 	struct s_stack	*next;
 }				t_stack;
 
@@ -23,7 +25,7 @@ void 		push(t_stack **top, int x);
 int			isEmpty(t_stack *top);
 int			peek(t_stack *top);
 int			pop(t_stack **top);
-void 		freeStack(t_stack** top);
+void 		freeStack(t_stack **top);
 // Instruction functions
 void		swap(t_stack **a);
 void		push_stack(t_stack **stack_to, t_stack **stack_from);
@@ -48,12 +50,18 @@ int			ft_str_cmp(char *s1, char *s2);
 int 		is_num(char *str);
 int  		duplicate(char **str);
 int			ft_is_order(t_stack *a);
-int stackMin(t_stack *stack);
+int 		stackMin(t_stack *stack);
+void    	index_stack(t_stack **a);
+int 		stackMax(t_stack *stack);
+void	    ft_update_pos(t_stack **a);
 //check input
 int			inputcheck(char **arg);
 t_stack		*generate_a(char **arg);
 //sort
-t_stack		*simple_sort(t_stack **a);
+t_stack		*simple_sort(t_stack **a, t_stack **b);
 int 		ft_Stack_sort(t_stack **a, t_stack **b);
 int    		newsort(t_stack **a, t_stack **b);
+int    		insertion_sort(t_stack **a, t_stack **b);
+int    		chunks_insertion_sort(t_stack **a, t_stack **b);
+int 		sort_10(t_stack **a, t_stack **b);
 #endif

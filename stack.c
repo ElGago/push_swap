@@ -20,6 +20,8 @@ t_stack	*ft_stacknew(int value)
 	if (!stack)
 		return (NULL);
 	stack->value = value;
+	stack->index = -1;
+	stack->pos = -1;
 	stack->next = NULL;
 	return (stack);
 }
@@ -41,7 +43,10 @@ void	ft_stackadd_back(t_stack **stack, t_stack *new)
 
 	tmp = ft_stacklast(*stack);
 	if ((tmp))
+	{
 		tmp->next = new;
+		tmp->next->pos = tmp->pos + 1;
+ 	}
 	if (!(*stack))
 		((*stack) = new);
 }
@@ -102,6 +107,8 @@ void push(t_stack **top, int x)
     	node->next = *top;
     	*top = node;
 	}
+	index_stack(top);
+	ft_update_pos(top);
 }
 
 int isEmpty(t_stack *top) 

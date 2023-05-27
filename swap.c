@@ -20,7 +20,8 @@ void    swap(t_stack **a)
         tmp = peek(*a);
         (*a)->value = (*a)->next->value;
         (*a)->next->value = tmp;
-    }  
+    }
+    ft_update_pos(a);  
 }
 
 void    push_stack(t_stack **stack_to, t_stack **stack_from)
@@ -33,16 +34,13 @@ void    push_stack(t_stack **stack_to, t_stack **stack_from)
 }
 
 void		rotate(t_stack **stack)
-{
-    int top;
+{   
     t_stack *last;
 
-    top = pop(stack);
-    if (top != -1)
-    {
-        last = ft_stacklast(*stack);
-        last->next = ft_stacknew(top);
-    }
+    last =  ft_stacknew(peek(*stack));
+    last->index = (*stack)->index;
+    pop(stack);
+    ft_stackadd_back(stack,last);
 }
 
 void		reverseRotate(t_stack **stack)

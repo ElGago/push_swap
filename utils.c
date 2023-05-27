@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:57:49 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/20 12:04:00 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/05/25 10:28:34 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_is_order(t_stack *a)
     while (tmp != NULL && tmp->next != NULL && tmp->value < tmp->next->value)
         tmp = tmp->next;
     if(tmp->next != NULL)
-        return (0);//si no termina en el ultimo elemento el ciclo anterior es que la pila no esta ordenada
+        return (0);
     return (1);
 }
 
@@ -66,10 +66,48 @@ int stackMin(t_stack *stack)
     min = stack->value; 
     while (stack)
     {
-        if (min < peek(stack))
+        if (min > peek(stack))
             min = peek(stack);
         stack = stack->next;
     }
     return (min);
+}
+
+void    index_stack(t_stack **a)
+{
+    int     ix;
+    int     size;
+    t_stack *tmp;
+    t_stack *pivot;
+
+    pivot = *a;
+    size = ft_stacksize(*a);
+    while (size-- > 0)
+    {
+        ix = 0;
+        tmp = *a;
+        while (tmp)
+        {
+            if (peek(pivot) > peek(tmp))
+                ix++;
+            tmp = tmp->next;
+        }
+        pivot->index = ix;
+        pivot = pivot->next;
+    } 
+}
+
+void    ft_update_pos(t_stack **a)
+{
+    int i;
+    t_stack *tmp;
+
+    tmp = *a;
+    i = 0;
+    while (tmp)
+    {
+        tmp->pos = i++;
+        tmp = tmp->next;
+    }
 }
 
