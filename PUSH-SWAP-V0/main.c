@@ -11,19 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-static void	printStack(t_stack *head)
-{
-	t_stack	*tmp;
 
-	tmp = head;
-	while (tmp != NULL)
-	{
-		ft_putnbr_fd(tmp->value,1);
-		ft_putstr_fd(", ",1);
-		tmp = tmp->next;
-	}
-	ft_putendl_fd("",1);
-}
 
 static void freeStack(t_stack** top) 
 {
@@ -45,7 +33,7 @@ int main(int args, char **argv)
     (void)args;
 
     top = generate_a(argv);
-    printStack(top);
+   // printStack(top);
     //rra(&top);
     tmp = NULL;
     //size = ft_stacksize(top);
@@ -55,7 +43,7 @@ int main(int args, char **argv)
     //size= sort_10(&top, &tmp);
     //size = newsort(&top,&tmp);
     printf("movimientos:%d\n", size);
-    printStack(top);
+   // printStack(top);
     freeStack(&top);
     freeStack(&tmp);
     return (0);

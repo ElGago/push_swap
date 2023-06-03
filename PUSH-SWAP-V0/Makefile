@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 SRCS =	stack.c swap.c stack_push.c rotate.c reverse_rotate.c ft_stack_input_check.c utils.c sort_5.c sort_simple.c \
-		massive_sort.c
+		massive_sort.c main.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -21,17 +21,15 @@ BONUS =	ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c \
 
 BONUS_OBJS = $(BONUS:.c=.o)
 
-AR = ar rcs
-
 CC = cc
 
 RM = rm -f
 
 CFLAGS = -Wall -Wextra -Werror -MMD
 
-INCLUDE = -I ./libft/libft.a push_swap.h
+INCLUDE = -Ipush_swap.h ./libft/libft.a 
 
-NAME = push_swap.a
+NAME = push_swap
 
 DEPS= $(OBJS:.o=.d)
 
@@ -46,7 +44,7 @@ $(NAME): $(OBJS)
 	@make fclean -C ./libft
 	@make bonus -C ./libft
 	@make clean -C ./libft
-	@$(AR) $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME)
 -include $(DEPS)
 
 clean:

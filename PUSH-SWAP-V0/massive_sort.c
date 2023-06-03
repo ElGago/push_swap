@@ -18,17 +18,32 @@ t_stack *near_edge(t_stack **a, int chunk, int s_chunk)
     t_stack *down;
     t_stack *tmp;
 
-    tmp = *a;
-    while (tmp && tmp->index > (s_chunk * (chunk + 1)) && tmp->pos < ft_stacksize(*a) / 2)
-        tmp = tmp->next;
-    up = tmp;
-    down = up;
-    while (tmp)
+    up = NULL;
+    down = NULL;
+    if (a && *a && ft_stacksize(*a) > 1)
     {
-        if (tmp->index < (s_chunk * (chunk + 1)) && tmp->pos < ft_stacksize(*a) / 2)
-            down = tmp;
-        tmp = tmp->next;
+        tmp = *a;
+        while (tmp && tmp->index > (s_chunk * (chunk + 1)) && tmp->pos <= ft_stacksize(*a) / 2)
+            tmp = tmp->next;
+        if (tmp->pos <= ft_stacksize(*a) / 2)
+            up = tmp;
+        while (tmp)
+        {
+            if (tmp->index < (s_chunk * (chunk + 1)) && tmp->pos > ft_stacksize(*a) / 2)
+                down = tmp;
+            tmp = tmp->next;
+        }
     }
+    else
+    {
+        if (!a)
+            return (NULL);
+        return (*a);
+    }
+    if (!up)
+        return (down);
+    if (!down)
+        return (up);
     if (up->pos <= ft_stacksize(*a) - down->pos)
         return (up);
     return (down);
@@ -45,19 +60,14 @@ int fill_chunk_a_to_b(t_stack **a, t_stack **b, int chunk, int size_chunks)
     while (*a)
     {
         piv = near_edge(a, chunk, size_chunks);
-        if (piv->pos < ft_stacksize(*a) / 2)
-        {
-            while (*a && (*a)->index > ((size_chunks) * (chunk + 1)))
+        if (piv->pos <= ft_stacksize(*a) / 2)
+            while ((*a)->index != piv->index)
             {
-                if (ft_stacksize(*b) > 1 && (*b)->index > (piv)->index)
-                    rr(a, b);
-                else
-                    ra(a);
+                ra(a);
                 mov++;
             }
-        }
         else
-            while (*a && (*a)->index > ((size_chunks) * (chunk + 1)))
+            while ((*a)->index != piv->index)
             {
                 rra(a);
                 mov++;
@@ -66,7 +76,8 @@ int fill_chunk_a_to_b(t_stack **a, t_stack **b, int chunk, int size_chunks)
         mov++;
         if (ft_stacksize(*b) > 1 && (*b)->index <= ((size_chunks) / 2) + ((size_chunks)*chunk))
         {
-            if (ft_stacksize(*a) > 1 && (*a)->index > (size_chunks) * (chunk + 1))
+            piv = near_edge(a, chunk, size_chunks);
+            if (piv && (*a)->index != piv->index && piv->pos <= ft_stacksize(*a) / 2)
                 rr(a, b);
             else
                 rb(b);
@@ -89,14 +100,14 @@ int try_b_to_a(t_stack **a, t_stack **b)
     {
         max = stackMax(*b);
         while ((*b)->index != max->index)
-        {   
+        {
             size = ft_stacksize(*b);
             if ((*b)->next->index == max->index)
-               sb(b);
+                sb(b);
             else if (max->pos > size / 2)
-                    rrb(b);
-                else
-                    rb(b);
+                rrb(b);
+            else
+                rb(b);
             mov++;
         }
         pa(a, b);
@@ -119,7 +130,7 @@ int insertion_chunks_sort(t_stack **a, t_stack **b)
     if (size >= 6 && size <= 20)
         max_chunks = 2;
     if (size > 20 && size <= 150)
-        max_chunks = 4;
+        max_chunks = 5;
     mov += fill_chunk_a_to_b(a, b, index_chunk++, (size / max_chunks));
     mov += try_b_to_a(a, b);
     return (mov);

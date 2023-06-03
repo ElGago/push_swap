@@ -145,7 +145,7 @@ t_stack *simple_sort(t_stack **a, t_stack **b)
     if(a_size >= 20 && a_size < 50)
         printf("mov = %d\n",newsort(a,b));
     if(a_size >= 50 && a_size < 100)
-        printf("mov = %d\n",insertion_sort(a,b));
+        printf("mov = %d\n",sort_10(a,b));
     /*
     if (a_size > 6)
     {

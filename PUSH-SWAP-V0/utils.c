@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:57:49 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/06/02 12:39:39 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/06/03 13:28:34 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int media(t_stack **a)
     int     media;
     
     media = 0;
+	tmp = *a;
     while (tmp)
     {
         media += tmp->index;

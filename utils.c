@@ -115,7 +115,8 @@ int media(t_stack **a)
 {
     t_stack *tmp;
     int     media;
-    
+
+    tmp = *a;
     media = 0;
     while (tmp)
     {

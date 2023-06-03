@@ -32,3 +32,17 @@ void    pb(t_stack **stack_b, t_stack **stack_a)
     push_stack(stack_b, stack_a);
     ft_putstr_fd("pb\n", 1);
 }
+
+void	printStack(t_stack *head)
+{
+	t_stack	*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		ft_putnbr_fd(tmp->value,1);
+		ft_putstr_fd(", ",1);
+		tmp = tmp->next;
+	}
+	ft_putendl_fd("",1);
+}

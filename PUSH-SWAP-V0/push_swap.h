@@ -41,6 +41,7 @@ void    	index_stack(t_stack **a);
 t_stack 	*stackMax(t_stack *stack);
 void	    ft_update_pos(t_stack **a);
 int 		media(t_stack **a);
+void	printStack(t_stack *head);
 //check input
 t_stack		*generate_a(char **arg);
 //sort
