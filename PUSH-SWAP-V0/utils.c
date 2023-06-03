@@ -6,11 +6,12 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:57:49 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/28 20:50:08 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:39:39 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
 
 int ft_is_order(t_stack *a)
 {
@@ -24,50 +25,29 @@ int ft_is_order(t_stack *a)
     return (1);
 }
 
-int	ft_str_cmp(char *s1, char *s2)
+t_stack *stackMax(t_stack *stack)
 {
-	int i;
+    t_stack *max;
 
-    i = 0;
-    while(s1[i] && s2[i] && s1[i] == s2[i])i++;
-	return (s1[i] - s2[i]);
-}
-
-int is_num(char *str)
-{
-    int i;
-
-    i = 0;
-    while(str[i] && ft_isdigit(str[i]))
-    i++;
-    if(str[i] != '\0')
-        return (0);
-    return (1);
-}
-
-int stackMax(t_stack *stack)
-{
-    int max;
-
-    max = stack->index; 
+    max = stack; 
     while (stack)
     {
-        if (max < stack->index)
-            max = stack->index;
+        if (max->index < stack->index)
+            max = stack;
         stack = stack->next;
     }
     return (max);
 }
 
-int stackMin(t_stack *stack)
+t_stack *stackMin(t_stack *stack)
 {
-    int min;
+    t_stack *min;
 
-    min = stack->index; 
+    min = stack; 
     while (stack)
     {
-        if (min > stack->index)
-            min = stack->index;
+        if (min->index > stack->index)
+            min = stack;
         stack = stack->next;
     }
     return (min);
@@ -88,7 +68,7 @@ void    index_stack(t_stack **a)
         tmp = *a;
         while (tmp)
         {
-            if (peek(pivot) > peek(tmp))
+            if (pivot->value > tmp->value)
                 ix++;
             tmp = tmp->next;
         }

@@ -26,52 +26,6 @@ t_stack	*ft_stacknew(int value)
 	return (stack);
 }
 
-t_stack	*ft_stacklast(t_stack *stack)
-{
-	if (!stack)
-		return (NULL);
-	if (!(stack)->next)
-		return (stack);
-	while (stack && (stack)->next)
-		stack = (stack)->next;
-	return (stack);
-}
-
-void	ft_stackadd_back(t_stack **stack, t_stack *new)
-{
-	t_stack	*tmp;
-
-	tmp = ft_stacklast(*stack);
-	new->next = NULL;
-	if ((tmp))
-	{
-		tmp->next = new;
-		tmp->next->pos = tmp->pos + 1;
- 	}
-	if (!(*stack))
-		((*stack) = new);
-	
-}
-
-void	ft_removeLast(t_stack **stack)
-{
-	t_stack	*tmp;
-	t_stack *pre;
-
-	tmp = (*stack);
-	pre = NULL;
-	if ((*stack))
-	{
-		while (tmp->next != NULL)
-		{
-			pre = tmp;
-			tmp = tmp->next;
-		}
-		pre->next = NULL;
-		free(tmp);
-	}
-}
-
 int	ft_stacksize(t_stack *stack)
 {
 	int	i;
@@ -85,20 +39,6 @@ int	ft_stacksize(t_stack *stack)
 	return (i);
 }
 
-void	printStack(t_stack *head)
-{
-	t_stack	*tmp;
-
-	tmp = head;
-	while (tmp != NULL)
-	{
-		ft_putnbr_fd(tmp->value,1);
-		ft_putstr_fd(", ",1);
-		tmp = tmp->next;
-	}
-	ft_putendl_fd("",1);
-}
-
 void push(t_stack **top, t_stack *x)
 {
     if (x)
@@ -107,19 +47,6 @@ void push(t_stack **top, t_stack *x)
     	*top = x;
 	}
     ft_update_pos(top);
-}
-
-int isEmpty(t_stack *top) 
-{
-    return (top == NULL);
-}
-
-int peek(t_stack *top)
-{
-    if (!isEmpty(top)) 
-        return (top->value);
-    else
-		return (-1);
 }
 
 t_stack *pop(t_stack **top)
@@ -136,16 +63,4 @@ t_stack *pop(t_stack **top)
 	else
 		return (NULL);
     ft_update_pos(top);
-}
-
-void freeStack(t_stack** top) 
-{
-	t_stack *temp;
-
-    while (*top != NULL)
-	{
-        temp = *top;
-        *top = (*top)->next;
-        free(temp);
-    }
 }

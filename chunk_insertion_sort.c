@@ -6,65 +6,117 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:13:28 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/26 10:52:09 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:50:23 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    printStack_index(t_stack **a)
+t_stack *hold_stack(t_stack **a, int s_chunk, int i)
 {
+    t_stack *up;
+    t_stack *down;
     t_stack *tmp;
 
     tmp = *a;
+    while (tmp && tmp->index > (s_chunk * (i + 1)) && tmp->pos < ft_stacksize(*a) / 2)
+        tmp = tmp->next;
+    up = tmp;
+    down = up;
     while (tmp)
     {
-        printf("(valor:%d, indice:%d), ", peek(tmp), (tmp)->index);
-        tmp= (tmp)->next;
+        if (tmp->index < (s_chunk * (i + 1)) && tmp->pos >= ft_stacksize(*a) / 2)
+            down = tmp;
+        tmp = tmp->next;
     }
-    printf("\n");
+    if (up->pos < ft_stacksize(*a) - down->pos)
+        return (up);
+    return (down);
 }
 
-int    chunks_insertion_sort(t_stack **a, t_stack **b)
+int try_a_to_b(t_stack **a, t_stack **b, int size, int chunks)
 {
-    int chunks;
-    int s_chunks;
     int i;
-    int size;
     int mov;
+    t_stack *hold;
 
-
-    size = ft_stacksize(*a);
-    mov =0;
-    chunks = 8;
-    if (size >= 6 && size <=20)
-        chunks = 2;
-    if (size >20 && size <=150)
-        chunks = 5;
-    s_chunks = size / chunks;
+    mov = 0;
     i = 0;
     while (*a)
     {
-        while (*a && (*a)->index > (s_chunks * (i + 1)))
+        hold = hold_stack(a, (size / chunks), i);
+        if (hold->pos < ft_stacksize(*a) / 2)
         {
-            ra(a);
+            while (*a && (*a)->index > ((size / chunks) * (i + 1)))
+            {
+                if (ft_stacksize(*b) > 1 && (*b)->index > (hold)->index)
+                    rr(a,b);
+                else
+                    ra(a);
+                mov++;
+            }
+        }
+        else
+            while (*a && (*a)->index > ((size / chunks) * (i + 1)))
+            {
+                rra(a);
+                mov++;
+            }
+        pb(b, a);
+        mov++;
+        if (ft_stacksize(*b) > 1 && (*b)->index <= ((size / chunks) / 2) + ((size / chunks) * i))
+        {
+            if (ft_stacksize(*a) > 1 && (*a)->index > (size / chunks) * (i + 1))
+                rr(a,b);
+            else
+                rb(b);
             mov++;
         }
-        pb(b,a);
-        mov++;
-        if (((ft_stacksize(*a) + (s_chunks * (i + 1))) + 1) == size)
+        if (((ft_stacksize(*a) + ((size / chunks) * (i + 1))) + 1) == size)
             i++;
     }
+    return (mov);
+}
+
+int try_b_to_a(t_stack **a, t_stack **b, int size)
+{
+    int mov;
+
+    mov = 0;
     while (*b)
     {
-        i = stackMax(*b);
-        while (peek(*b) != i)
-        {
-            rb(b);
+        while ((*b)->index != stackMax(*b))
+        {   
+            size = ft_stacksize(*b);
+            if ((*b)->next->index == stackMax(*b))
+               sb(b);
+            else if (stackMax(*b) > size / 2)
+                    rrb(b);
+                else
+                    rb(b);
             mov++;
         }
-        pa(a,b);
+        pa(a, b);
         mov++;
     }
+    return (mov);
+}
+
+int chunks_insertion_sort(t_stack **a, t_stack **b)
+{
+    int chunks;
+    int size;
+    int mov;
+
+    size = ft_stacksize(*a);
+    mov = 0;
+    chunks = 8;
+    if (size >= 6 && size <= 20)
+        chunks = 2;
+    if (size > 20 && size <= 150)
+        chunks = 7;
+    mov = try_a_to_b(a,b,size,chunks);
+    mov += try_b_to_a(a, b, size);
+    printf("chunks = %d, s_chunks = %d\n", chunks, ft_stacksize(*a)/chunks);
     return mov;
 }

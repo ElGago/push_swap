@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inputcheck.c                                       :+:      :+:    :+:   */
+/*   ft_stack_input_check.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/06 12:22:22 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/28 20:01:35 by jocorrea         ###   ########.fr       */
+/*   Created: 2023/06/01 11:24:34 by jocorrea          #+#    #+#             */
+/*   Updated: 2023/06/01 11:36:30 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "push_swap.h"
+#include "push_swap.h"
 
-int  duplicate(char **str)
+static int	ft_str_cmp(char *s1, char *s2)
+{
+	int i;
+
+    i = 0;
+    while(s1[i] && s2[i] && s1[i] == s2[i])i++;
+	return (s1[i] - s2[i]);
+}
+
+static int  duplicate(char **str)
 {
     int i;
     int j;
@@ -36,14 +45,14 @@ int  duplicate(char **str)
     return (0); 
 }
 
-int inputcheck(char **arg)
+static int is_num(char *str)
 {
     int i;
 
-    i = 1;
-    while (arg[i] && is_num(arg[i]))
-        i++;
-    if (arg[i] != 0 || duplicate(arg))
+    i = 0;
+    while(str[i] && ft_isdigit(str[i]))
+    i++;
+    if(str[i] != '\0')
         return (0);
     return (1);
 }
@@ -53,11 +62,15 @@ t_stack *generate_a(char **arg)
     t_stack *a = NULL;
     t_stack *node;
     int size;
+    int i;
 
     size = 0;
+    i = 1;
     while (arg[size] != 0)
         size++;
-    if (inputcheck(arg))
+    while (arg[i] && is_num(arg[i]))
+        i++;   
+    if (arg[i] == 0 && !duplicate(arg))
         while (size-- > 1)
         {
             node = ft_stacknew(ft_atoi(arg[size]));
@@ -66,6 +79,5 @@ t_stack *generate_a(char **arg)
     else
         printf("argumentos invalidos\n");
     index_stack(&a);
-    ft_update_pos(&a);
     return (a);
 }
