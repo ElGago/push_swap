@@ -12,7 +12,6 @@
 
 #include "push_swap.h"
 
-
 int ft_is_order(t_stack *a)
 {
     t_stack *tmp;
@@ -20,7 +19,7 @@ int ft_is_order(t_stack *a)
     tmp = a;
     while (tmp != NULL && tmp->next != NULL && tmp->value < tmp->next->value)
         tmp = tmp->next;
-    if(tmp->next != NULL)
+    if (tmp->next != NULL)
         return (0);
     return (1);
 }
@@ -29,7 +28,7 @@ t_stack *stackMax(t_stack *stack)
 {
     t_stack *max;
 
-    max = stack; 
+    max = stack;
     while (stack)
     {
         if (max->index < stack->index)
@@ -43,7 +42,7 @@ t_stack *stackMin(t_stack *stack)
 {
     t_stack *min;
 
-    min = stack; 
+    min = stack;
     while (stack)
     {
         if (min->index > stack->index)
@@ -53,10 +52,10 @@ t_stack *stackMin(t_stack *stack)
     return (min);
 }
 
-void    index_stack(t_stack **a)
+void index_stack(t_stack **a)
 {
-    int     ix;
-    int     size;
+    int ix;
+    int size;
     t_stack *tmp;
     t_stack *pivot;
 
@@ -74,10 +73,10 @@ void    index_stack(t_stack **a)
         }
         pivot->index = ix;
         pivot = pivot->next;
-    } 
+    }
 }
 
-void    ft_update_pos(t_stack **a)
+void ft_update_pos(t_stack **a)
 {
     int i;
     t_stack *tmp;
@@ -89,19 +88,4 @@ void    ft_update_pos(t_stack **a)
         tmp->pos = i++;
         tmp = tmp->next;
     }
-}
-
-int media(t_stack **a)
-{
-    t_stack *tmp;
-    int     media;
-    
-    media = 0;
-    while (tmp)
-    {
-        media += tmp->index;
-        tmp = tmp->next;
-    }
-    media = (int)media / ft_stacksize(*a);
-    return (media);
 }
