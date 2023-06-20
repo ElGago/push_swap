@@ -12,24 +12,36 @@
 
 #include "push_swap.h"
 
-void try_b_to_a(t_stack **a, t_stack **b)
+void    last_A_mov_update(t_stack **a, t_stack **b, int *down)
 {
-    t_stack *max;
-    int size;
-    int down;
-    
-    down = 0;
-    while (*b)
-    {
-        max = stackmax(*b);
-        while ((*b)->index != max->index)
-        {   
+    if (*b)
+            while ((*a)->index > ft_stacklast(*a)->index && ft_stacklast(*a)->index > stackmax(*b)->index)
+            {
+                rra(a);
+                (*down)--;
+            }
+        else
+            while ((*a)->index > ft_stacklast(*a)->index)
+            {
+                rra(a);
+                (*down)--;
+            }
+}
+
+void	b_position(t_stack **a, t_stack **b, int *down)
+{
+	t_stack	*max;
+	int		size;
+
+	max = stackmax(*b);
+    while ((*b)->index != max->index)
+    {   
             size = ft_stacksize(*b);
-            if (down == 0 || *a == NULL || (*b)->index > ft_stacklast(*a)->index)
+            if (*down == 0 || *a == NULL || (*b)->index > ft_stacklast(*a)->index)
             {
                 pa(a,b);
                 ra(a);
-                down++;
+                (*down)++;
             }
             else if ((*b)->next->index == max->index)
                     sb(b);
@@ -37,20 +49,19 @@ void try_b_to_a(t_stack **a, t_stack **b)
                     rrb(b);
                 else
                     rb(b);
-        }
+		}
+}
+
+void try_b_to_a(t_stack **a, t_stack **b)
+{
+    int down;
+    
+    down = 0;
+    while (*b)
+    {
+        b_position(a, b, &down);
         pa(a, b);
-        if (*b)
-            while ((*a)->index > ft_stacklast(*a)->index && ft_stacklast(*a)->index > stackmax(*b)->index)
-            {
-                rra(a);
-                down--;
-            }
-        else
-            while ((*a)->index > ft_stacklast(*a)->index)
-            {
-                rra(a);
-                down--;
-            }
+        last_A_mov_update(a, b, &down);
     }
 }
 
