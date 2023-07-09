@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 11:24:34 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/06/12 12:04:12 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:53:41 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	is_num(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
@@ -67,8 +67,8 @@ static int	inputcheck(char **arg)
 	i = 1;
 	while (arg[i] && is_num(arg[i]))
 	{
-		if (ft_strlen(arg[i]) <= 10)
-			num = ft_atoi(arg[i]);
+		if (ft_strlen(arg[i]) <= 11)
+			num = ft_atol(arg[i]);
 		else
 			return (0);
 		if (num < -2147483648 || num > 2147483647)
@@ -95,6 +95,8 @@ t_stack	*generate_a(char **arg)
 		while (size-- > 1)
 		{
 			node = ft_stacknew(ft_atoi(arg[size]));
+			if (!node)
+				return (freestack(&a));
 			push(&a, node);
 		}
 	}

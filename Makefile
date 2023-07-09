@@ -6,17 +6,17 @@
 #    By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/05 10:23:35 by jocorrea          #+#    #+#              #
-#    Updated: 2023/06/20 10:34:05 by jocorrea         ###   ########.fr        #
+#    Updated: 2023/07/09 12:25:46 by jocorrea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	stack.c swap.c stack_push.c rotate.c reverse_rotate.c ft_stack_input_check.c utils.c \
-		massive_sort.c main.c sort_5.c sort_3.c fill_a_to_b.c stack_sort_mov.c
+		massive_sort.c main.c sort_5.c sort_3.c fill_a_to_b.c stack_sort_mov.c ft_atol.c
 
 OBJS = $(SRCS:.c=.o)
 
 BONUS =	stack.c swap.c stack_push.c rotate.c reverse_rotate.c ft_stack_input_check.c utils.c \
-		massive_sort.c sort_5.c sort_3.c fill_a_to_b.c stack_sort_mov.c checker.c
+		massive_sort.c sort_5.c sort_3.c fill_a_to_b.c stack_sort_mov.c checker.c ft_atol.c
 
 BONUS_OBJS = $(BONUS:.c=.o)
 

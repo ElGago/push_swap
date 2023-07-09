@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 11:17:34 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/06/12 12:06:29 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:00:19 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ void	reverserotate(t_stack **stack)
 	t_stack	*pre;
 
 	last = *stack;
-	while (last && (last)->next)
+	if (last && last->next)
 	{
-		pre = last;
-		last = (last)->next;
+		while (last && (last)->next)
+		{
+			pre = last;
+			last = (last)->next;
+		}
+		pre->next = NULL;
+		if (last != NULL)
+			push(stack, last);
 	}
-	pre->next = NULL;
-	if (last != NULL)
-		push(stack, last);
 }
 
 void	rra(t_stack **stack_a)

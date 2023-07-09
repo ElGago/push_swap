@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:43:52 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/05/09 10:32:30 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:30:29 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 			free (content);
 			return (NULL);
 		}
-			lst = lst->next;
+		lst = lst->next;
 	}
 	return (new_list);
 }

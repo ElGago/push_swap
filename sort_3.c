@@ -6,7 +6,7 @@
 /*   By: jocorrea <jocorrea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 12:07:28 by jocorrea          #+#    #+#             */
-/*   Updated: 2023/06/12 12:35:37 by jocorrea         ###   ########.fr       */
+/*   Updated: 2023/07/09 17:00:07 by jocorrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_is_order(t_stack *a)
 	tmp = a;
 	while (tmp != NULL && tmp->next != NULL && tmp->value < tmp->next->value)
 		tmp = tmp->next;
-	if (tmp->next != NULL)
+	if (tmp == NULL || tmp->next != NULL)
 		return (0);
 	return (1);
 }
@@ -73,7 +73,7 @@ t_stack	*near_edge(t_stack **a, int chunk, int s_chunk)
 	return (down);
 }
 
-void	freestack(t_stack **top)
+void	*freestack(t_stack **top)
 {
 	t_stack	*temp;
 
@@ -83,4 +83,5 @@ void	freestack(t_stack **top)
 		*top = (*top)->next;
 		free(temp);
 	}
+	return (NULL);
 }
